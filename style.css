@@ -1,0 +1,1152 @@
+/* ==========================================================================
+   Design System & Theme Variables
+   ========================================================================== */
+:root {
+    /* Fonts */
+    --font-primary: 'Outfit', 'Noto Sans TC', sans-serif;
+    
+    /* Theme: Cosmic (Default) */
+    --bg-gradient: radial-gradient(circle at center, #1a153b 0%, #0c081f 100%);
+    --bg-panel: rgba(25, 18, 56, 0.45);
+    --border-panel: rgba(157, 78, 221, 0.25);
+    --border-glow: 0 0 15px rgba(157, 78, 221, 0.4);
+    
+    --primary-color: #9d4edd;
+    --primary-glow: #e0aaff;
+    --secondary-color: #3f37c9;
+    --accent-color: #f72585;
+    --success-color: #4cc9f0;
+    --success-glow: rgba(76, 201, 240, 0.6);
+    --warning-color: #f77f00;
+    --danger-color: #d62828;
+    
+    --text-primary: #f8f9fa;
+    --text-secondary: #c7c7cd;
+    --text-muted: #74747a;
+    
+    --tile-bg: rgba(63, 55, 201, 0.25);
+    --tile-bg-fixed: rgba(255, 255, 255, 0.1);
+    --tile-border: rgba(76, 201, 240, 0.3);
+    --tile-text: #ffffff;
+    --tile-glow: 0 0 10px rgba(76, 201, 240, 0.2);
+    
+    --cell-size: 75px;
+    --grid-size: 3;
+    --transition-speed: 0.3s;
+}
+
+/* Theme: Cyberpunk */
+.theme-cyber {
+    --bg-gradient: linear-gradient(135deg, #0d0e15 0%, #151828 100%);
+    --bg-panel: rgba(13, 14, 21, 0.8);
+    --border-panel: #00f0ff;
+    --border-glow: 0 0 10px rgba(0, 240, 255, 0.3);
+    
+    --primary-color: #ff007f;
+    --primary-glow: #ff007f;
+    --secondary-color: #00f0ff;
+    --accent-color: #ff007f;
+    --success-color: #39ff14;
+    --success-glow: rgba(57, 255, 20, 0.6);
+    --warning-color: #ffb703;
+    --danger-color: #ff0055;
+    
+    --text-primary: #00f0ff;
+    --text-secondary: #ff007f;
+    --text-muted: #4e5166;
+    
+    --tile-bg: rgba(13, 14, 21, 0.9);
+    --tile-bg-fixed: rgba(30, 32, 48, 0.8);
+    --tile-border: #ff007f;
+    --tile-text: #ffffff;
+    --tile-glow: 0 0 8px rgba(255, 0, 127, 0.5);
+}
+
+/* Theme: Retro Classic */
+.theme-retro {
+    --bg-gradient: linear-gradient(180deg, #181206 0%, #0d0802 100%);
+    --bg-panel: rgba(43, 33, 14, 0.85);
+    --border-panel: #ffb703;
+    --border-glow: 0 0 8px rgba(255, 183, 3, 0.4);
+    
+    --primary-color: #fb8500;
+    --primary-glow: #ffb703;
+    --secondary-color: #ffb703;
+    --accent-color: #d62828;
+    --success-color: #8ac926;
+    --success-glow: rgba(138, 201, 38, 0.6);
+    --warning-color: #fb8500;
+    --danger-color: #ae2012;
+    
+    --text-primary: #ffb703;
+    --text-secondary: #f4a261;
+    --text-muted: #6f5228;
+    
+    --tile-bg: #2b210e;
+    --tile-bg-fixed: #1f180a;
+    --tile-border: #f4a261;
+    --tile-text: #ffffff;
+    --tile-glow: 0 0 5px rgba(244, 162, 97, 0.3);
+}
+
+/* ==========================================================================
+   Basic Reset & Layout
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+}
+
+body {
+    font-family: var(--font-primary);
+    background: var(--bg-gradient);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    position: relative;
+    transition: background var(--transition-speed) ease;
+}
+
+/* Cosmic Theme Background Stars */
+.stars-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.theme-cosmic .stars-container {
+    opacity: 0.8;
+}
+
+/* Simple starry background using CSS box-shadows */
+.stars, .stars2, .stars3 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: transparent;
+}
+.stars {
+    width: 1px;
+    height: 1px;
+    box-shadow: 100px 300px #fff, 200px 400px #fff, 400px 100px #fff, 800px 500px #fff, 1200px 300px #fff, 1400px 700px #fff, 1600px 200px #fff, 300px 800px #fff, 600px 900px #fff, 900px 700px #fff, 1100px 900px #fff, 1300px 100px #fff, 1500px 500px #fff;
+    animation: stars-anim 100s linear infinite;
+}
+.stars2 {
+    width: 2px;
+    height: 2px;
+    box-shadow: 150px 200px #fff, 350px 600px #fff, 550px 250px #fff, 750px 800px #fff, 950px 400px #fff, 1150px 650px #fff, 1350px 300px #fff, 1550px 750px #fff, 250px 950px #fff, 650px 150px #fff, 850px 950px #fff;
+    animation: stars-anim 150s linear infinite;
+}
+.stars3 {
+    width: 3px;
+    height: 3px;
+    box-shadow: 50px 500px #fff, 450px 300px #fff, 850px 100px #fff, 1250px 800px #fff, 1650px 400px #fff, 250px 100px #fff, 650px 700px #fff, 1050px 500px #fff, 1450px 900px #fff;
+    animation: stars-anim 200s linear infinite;
+}
+
+@keyframes stars-anim {
+    from { transform: translateY(0); }
+    to { transform: translateY(-1000px); }
+}
+
+/* ==========================================================================
+   Header Component
+   ========================================================================== */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 2.5rem;
+    z-index: 10;
+    border-bottom: 1px solid var(--border-panel);
+    backdrop-filter: blur(10px);
+    background-color: rgba(12, 8, 31, 0.4);
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.logo-icon {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    text-shadow: 0 0 10px var(--primary-glow);
+    animation: pulse-glow 2s infinite ease-in-out;
+}
+
+.header-logo h1 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, #fff, var(--text-primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.header-logo .subtitle {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--text-secondary);
+    -webkit-text-fill-color: initial;
+    display: inline-block;
+    margin-left: 0.5rem;
+    opacity: 0.8;
+}
+
+.header-controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.icon-button {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-panel);
+    color: var(--text-primary);
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: all var(--transition-speed) cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.icon-button:hover {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    transform: scale(1.1);
+    box-shadow: 0 0 15px var(--primary-color);
+}
+
+/* Theme dropdown styling */
+.theme-selector {
+    position: relative;
+}
+
+.theme-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-panel);
+    border-radius: 12px;
+    padding: 0.5rem;
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    transform-origin: top right;
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s;
+}
+
+.theme-dropdown.hidden {
+    display: none;
+}
+
+.theme-opt {
+    background: transparent;
+    border: none;
+    color: #fff;
+    padding: 0.6rem 0.8rem;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: left;
+    font-family: var(--font-primary);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
+}
+
+.theme-opt:hover, .theme-opt.active {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--primary-glow);
+}
+
+/* ==========================================================================
+   Main Layout & Panels
+   ========================================================================== */
+.game-container {
+    flex: 1;
+    display: flex;
+    padding: 2rem;
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    z-index: 1;
+}
+
+/* Glassmorphism Panel styles */
+.glass-panel {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-panel);
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    box-shadow: var(--border-glow), inset 0 0 20px rgba(255, 255, 255, 0.02);
+    transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+/* Sidebar: Control Panel */
+.control-panel {
+    width: 320px;
+    flex-shrink: 0;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    height: fit-content;
+}
+
+.panel-section h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-left: 3px solid var(--primary-color);
+    padding-left: 0.5rem;
+}
+
+.control-label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.4rem;
+    margin-top: 0.8rem;
+    font-weight: 600;
+}
+
+/* Selectors inside Panel */
+.size-selector, .mode-selector, .difficulty-selector {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+}
+
+.size-btn, .mode-btn, .diff-btn {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+    padding: 0.6rem 0.4rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: var(--font-primary);
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+.mode-btn {
+    padding: 0.7rem 0.5rem;
+}
+
+.size-btn:hover, .mode-btn:hover, .diff-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.size-btn.active, .mode-btn.active, .diff-btn.active {
+    background: var(--primary-color);
+    color: #fff;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(157, 78, 221, 0.5);
+}
+
+/* Game Stats Cards */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.6rem;
+}
+
+.stat-card {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 0.6rem 0.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-title {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.2rem;
+}
+
+.stat-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.stat-value.highlight-text {
+    color: var(--accent-color);
+    text-shadow: 0 0 10px rgba(247, 37, 133, 0.4);
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.primary-btn, .secondary-btn, .danger-btn {
+    width: 100%;
+    padding: 0.8rem;
+    border-radius: 10px;
+    font-family: var(--font-primary);
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+}
+
+.primary-btn {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(63, 55, 201, 0.4);
+}
+
+.primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(63, 55, 201, 0.6);
+}
+
+.secondary-btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+.secondary-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.danger-btn {
+    background: rgba(214, 40, 40, 0.1);
+    border: 1px solid rgba(214, 40, 40, 0.3);
+    color: #ff4d4d;
+}
+
+.danger-btn:hover {
+    background: var(--danger-color);
+    border-color: var(--danger-color);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(214, 40, 40, 0.4);
+}
+
+/* ==========================================================================
+   Center Board & Indicators
+   ========================================================================== */
+.board-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.target-banner {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 0.6rem 1.5rem;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    backdrop-filter: blur(5px);
+}
+
+.target-glow {
+    color: var(--success-color);
+    font-size: 1.3rem;
+    font-weight: 800;
+    text-shadow: 0 0 10px var(--success-color);
+}
+
+/* Main outer wrapper grid */
+.board-outer-wrapper {
+    display: grid;
+    /* CSS variables updated dynamically by JS:
+       --grid-size: 3, 4, 5
+       Columns/Rows size: 55px (left sum) + N*cell-size + 55px (right sum)
+    */
+    grid-template-columns: 55px repeat(var(--grid-size), var(--cell-size)) 55px;
+    grid-template-rows: 55px repeat(var(--grid-size), var(--cell-size)) 55px;
+    gap: 8px;
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+
+/* Diagonal Sums positioned in the corners of row 1 */
+.diag-sum {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1.5px dashed var(--text-muted);
+    color: var(--text-secondary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all var(--transition-speed) ease;
+    cursor: default;
+}
+
+.diag-sum i {
+    font-size: 0.65rem;
+    opacity: 0.5;
+    margin-bottom: 1px;
+}
+
+/* Specific Diagonal positioning */
+.diag-sum.tl-br {
+    grid-row: 1;
+    grid-column: 1;
+    justify-self: center;
+    align-self: center;
+}
+
+.diag-sum.tr-bl {
+    grid-row: 1;
+    grid-column: calc(var(--grid-size) + 2);
+    justify-self: center;
+    align-self: center;
+}
+
+/* Row & Column indicator styles */
+.sum-indicator {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1.5px dashed var(--text-muted);
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    transition: all var(--transition-speed) ease;
+    justify-self: center;
+    align-self: center;
+}
+
+/* States for indicators (row, col, diag) */
+.sum-indicator.correct, .diag-sum.correct {
+    border: 2px solid var(--success-color);
+    background: rgba(76, 201, 240, 0.12);
+    color: var(--success-color);
+    box-shadow: 0 0 12px var(--success-glow);
+    transform: scale(1.08);
+}
+
+.sum-indicator.incorrect, .diag-sum.incorrect {
+    border: 2px solid var(--danger-color);
+    background: rgba(214, 40, 40, 0.1);
+    color: #ff6b6b;
+    box-shadow: 0 0 8px rgba(214, 40, 40, 0.3);
+}
+
+.sum-indicator.partial, .diag-sum.partial {
+    border: 1.5px dashed var(--primary-color);
+    color: var(--text-primary);
+}
+
+/* Grid Cells (the actual grid cells in rows 2..N+1, cols 2..N+1) */
+.grid-cell {
+    width: var(--cell-size);
+    height: var(--cell-size);
+    background: rgba(255, 255, 255, 0.02);
+    border: 2px solid rgba(255, 255, 255, 0.05);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+    box-shadow: inset 0 2px 5px rgba(255, 255, 255, 0.01);
+}
+
+.grid-cell:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(157, 78, 221, 0.3);
+}
+
+/* Active selected cell in Fill mode */
+.grid-cell.selected {
+    background: rgba(157, 78, 221, 0.15) !important;
+    border: 2.5px solid var(--primary-color) !important;
+    box-shadow: 0 0 18px var(--primary-glow) !important;
+    transform: scale(0.96);
+    z-index: 2;
+}
+
+/* Target highlight for swaps */
+.grid-cell.swap-source {
+    border: 2.5px dashed var(--accent-color) !important;
+    box-shadow: 0 0 15px rgba(247, 37, 133, 0.5) !important;
+    animation: pulse-swap 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse-swap {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(0.95); opacity: 0.8; }
+}
+
+/* Tile numbers inside grid cells */
+.tile-num {
+    width: calc(100% - 6px);
+    height: calc(100% - 6px);
+    border-radius: 10px;
+    background: var(--tile-bg);
+    border: 1px solid var(--tile-border);
+    color: var(--tile-text);
+    font-size: 1.8rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--tile-glow);
+    transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Fixed clue numbers that cannot be moved/changed */
+.tile-num.fixed {
+    background: var(--tile-bg-fixed);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.5);
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Anim when placing tile */
+.tile-num.placed-anim {
+    animation: scale-up-tile 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes scale-up-tile {
+    0% { transform: scale(0.6); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Grid Dimension configurations */
+.grid-3x3 { --grid-size: 3; --cell-size: 75px; }
+.grid-4x4 { --grid-size: 4; --cell-size: 68px; }
+.grid-5x5 { --grid-size: 5; --cell-size: 60px; }
+
+/* ==========================================================================
+   Number Bank Component (for Fill Mode)
+   ========================================================================== */
+.bank-container {
+    width: 100%;
+    max-width: 580px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 18px;
+    padding: 1rem;
+    margin-top: 0.5rem;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.bank-container.hidden {
+    opacity: 0.3;
+    pointer-events: none;
+    transform: translateY(10px);
+}
+
+.bank-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bank-desc {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+.number-bank {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+
+.bank-tile {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: var(--tile-bg);
+    border: 1.5px solid var(--tile-border);
+    color: var(--tile-text);
+    font-size: 1.25rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--tile-glow);
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.bank-tile:hover {
+    transform: translateY(-4px) scale(1.08);
+    box-shadow: 0 5px 12px rgba(76, 201, 240, 0.4);
+    border-color: var(--success-color);
+}
+
+.bank-tile.selected {
+    background: var(--primary-color);
+    border-color: var(--primary-glow);
+    color: #fff;
+    box-shadow: 0 0 15px var(--primary-glow);
+    transform: scale(0.92);
+}
+
+/* Number tile is already placed in the grid, so it's disabled in bank */
+.bank-tile.used {
+    opacity: 0.15;
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+    pointer-events: none;
+    box-shadow: none;
+    transform: none !important;
+}
+
+/* ==========================================================================
+   Modals & Overlays
+   ========================================================================== */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: opacity 0.3s ease;
+}
+
+.modal.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(8, 5, 20, 0.7);
+    backdrop-filter: blur(8px);
+}
+
+.modal-content {
+    width: 90%;
+    max-width: 600px;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+    z-index: 1001;
+    padding: 2.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    animation: modal-zoom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15);
+}
+
+.modal.hidden .modal-content {
+    animation: none;
+}
+
+@keyframes modal-zoom {
+    from { transform: scale(0.85); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.modal-close {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.2rem;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.modal-close:hover {
+    color: var(--text-primary);
+}
+
+.modal-content h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    border-bottom: 1px solid var(--border-panel);
+    padding-bottom: 0.8rem;
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.modal-body p strong {
+    color: #fff;
+}
+
+.formula-box {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-primary);
+}
+
+.formula-box code {
+    color: var(--success-color);
+    font-weight: 800;
+    font-size: 1.1rem;
+    text-shadow: 0 0 5px rgba(76, 201, 240, 0.4);
+}
+
+.constant-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    background: rgba(157, 78, 221, 0.05);
+    border-radius: 10px;
+    padding: 0.8rem 1rem;
+}
+
+.const-item strong {
+    color: var(--primary-glow);
+}
+
+.how-to-play-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.how-to-play-list li {
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.how-to-play-list li i {
+    position: absolute;
+    left: 0;
+    top: 4px;
+    color: var(--success-color);
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    border-top: 1px solid var(--border-panel);
+    padding-top: 1rem;
+    margin-top: 0.5rem;
+}
+
+/* Victory Modal styling */
+.victory-content {
+    max-width: 500px;
+    text-align: center;
+    align-items: center;
+    border-color: var(--success-color);
+    box-shadow: 0 0 30px rgba(76, 201, 240, 0.4);
+}
+
+.victory-icon-wrapper {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(76, 201, 240, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+.trophy-glow {
+    font-size: 2.5rem;
+    color: #ffd166;
+    text-shadow: 0 0 20px #ffd166;
+}
+
+.animate-bounce {
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.victory-message {
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.victory-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.v-stat {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.v-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.v-val {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--success-color);
+}
+
+#confetti-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1002;
+    border-radius: 20px;
+}
+
+/* ==========================================================================
+   Toasts & Audio UI
+   ========================================================================== */
+.toast-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    z-index: 2000;
+}
+
+.toast {
+    background: rgba(12, 8, 31, 0.9);
+    border-left: 4px solid var(--primary-color);
+    border-radius: 8px;
+    padding: 0.8rem 1.2rem;
+    color: #fff;
+    font-family: var(--font-primary);
+    font-size: 0.9rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    backdrop-filter: blur(5px);
+    animation: toast-slide-in 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.15);
+    transition: all 0.3s ease;
+}
+
+.toast.toast-success { border-left-color: var(--success-color); }
+.toast.toast-error { border-left-color: var(--danger-color); }
+.toast.toast-info { border-left-color: var(--secondary-color); }
+
+@keyframes toast-slide-in {
+    from { transform: translateX(100px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+.audio-control {
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    z-index: 999;
+}
+
+.audio-btn {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--border-panel);
+    color: var(--text-secondary);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    transition: all 0.2s;
+    backdrop-filter: blur(5px);
+}
+
+.audio-btn:hover {
+    color: #fff;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(157, 78, 221, 0.4);
+    transform: scale(1.08);
+}
+
+/* ==========================================================================
+   Animations & Utilities
+   ========================================================================== */
+@keyframes pulse-glow {
+    0%, 100% { text-shadow: 0 0 8px var(--primary-glow); }
+    50% { text-shadow: 0 0 20px var(--primary-glow), 0 0 30px var(--primary-color); }
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ==========================================================================
+   Responsive Media Queries
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .game-container {
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem;
+    }
+    
+    .control-panel {
+        width: 100%;
+        max-width: 580px;
+    }
+    
+    .board-area {
+        width: 100%;
+    }
+}
+
+@media (max-width: 500px) {
+    .app-header {
+        padding: 1rem;
+    }
+    .header-logo h1 {
+        font-size: 1.3rem;
+    }
+    .header-logo .subtitle {
+        display: none;
+    }
+    
+    /* Shrink the grid cells for small screens */
+    .grid-3x3 { --cell-size: 58px; }
+    .grid-4x4 { --cell-size: 50px; }
+    .grid-5x5 { --cell-size: 44px; }
+    
+    .board-outer-wrapper {
+        padding: 0.5rem;
+        grid-template-columns: 40px repeat(var(--grid-size), var(--cell-size)) 40px;
+        grid-template-rows: 40px repeat(var(--grid-size), var(--cell-size)) 40px;
+        gap: 4px;
+        border-radius: 15px;
+    }
+    
+    .sum-indicator, .diag-sum {
+        width: 32px;
+        height: 32px;
+        font-size: 0.7rem;
+    }
+    
+    .tile-num {
+        font-size: 1.15rem;
+    }
+    
+    .bank-tile {
+        width: 34px;
+        height: 34px;
+        font-size: 0.95rem;
+    }
+}

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>魔術方框：數字神祕方陣 | Magic Square Grid</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+TC:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="theme-cosmic">
+    <!-- Starfield background for cosmic theme -->
+    <div class="stars-container">
+        <div class="stars"></div>
+        <div class="stars2"></div>
+        <div class="stars3"></div>
+    </div>
+
+    <header class="app-header">
+        <div class="header-logo">
+            <i class="fa-solid fa-wand-magic-sparkles logo-icon"></i>
+            <h1>魔術方框 <span class="subtitle">Magic Square Grid</span></h1>
+        </div>
+        <div class="header-controls">
+            <button id="btn-tutorial" class="icon-button" title="遊戲說明"><i class="fa-solid fa-circle-question"></i></button>
+            <div class="theme-selector">
+                <button id="theme-toggle" class="icon-button" title="切換主題"><i class="fa-solid fa-palette"></i></button>
+                <div class="theme-dropdown hidden" id="theme-dropdown">
+                    <button data-theme="cosmic" class="theme-opt active"><i class="fa-solid fa-user-astronaut"></i> 幻境星空</button>
+                    <button data-theme="cyber" class="theme-opt"><i class="fa-solid fa-bolt"></i> 霓虹賽博</button>
+                    <button data-theme="retro" class="theme-opt"><i class="fa-solid fa-gamepad"></i> 復古經典</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="game-container">
+        <!-- Sidebar: Control Panel -->
+        <aside class="control-panel glass-panel">
+            <div class="panel-section">
+                <h2><i class="fa-solid fa-sliders"></i> 遊戲設定</h2>
+                
+                <label class="control-label">方陣大小 (Grid Size)</label>
+                <div class="size-selector">
+                    <button class="size-btn active" data-size="3">3 x 3</button>
+                    <button class="size-btn" data-size="4">4 x 4</button>
+                    <button class="size-btn" data-size="5">5 x 5</button>
+                </div>
+
+                <label class="control-label">遊戲模式 (Game Mode)</label>
+                <div class="mode-selector">
+                    <button class="mode-btn active" data-mode="fill" title="從下方數字庫中拖曳或點選數字填入方格"><i class="fa-solid fa-pen-to-square"></i> 填數模式</button>
+                    <button class="mode-btn" data-mode="swap" title="點選任意兩個方格互相交換數字"><i class="fa-solid fa-arrows-rotate"></i> 置換模式</button>
+                </div>
+
+                <label class="control-label">關卡難度 (Difficulty)</label>
+                <div class="difficulty-selector">
+                    <button class="diff-btn" data-diff="easy">初級 (50% 提示)</button>
+                    <button class="diff-btn active" data-diff="medium">中級 (30% 提示)</button>
+                    <button class="diff-btn" data-diff="hard">高級 (無提示)</button>
+                </div>
+            </div>
+
+            <div class="panel-section game-stats">
+                <h2><i class="fa-solid fa-chart-simple"></i> 即時狀態</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-title">目標常數</span>
+                        <span class="stat-value highlight-text" id="target-sum">15</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-title">計時器</span>
+                        <span class="stat-value" id="game-timer">00:00</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-title">步數</span>
+                        <span class="stat-value" id="move-count">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-section action-buttons">
+                <button id="btn-new-game" class="primary-btn"><i class="fa-solid fa-rotate"></i> 新局 (重新產生)</button>
+                <button id="btn-reset" class="secondary-btn"><i class="fa-solid fa-arrows-spin"></i> 重設本局</button>
+                <button id="btn-hint" class="secondary-btn"><i class="fa-solid fa-lightbulb"></i> 提示一個字</button>
+                <button id="btn-solve" class="danger-btn"><i class="fa-solid fa-eye"></i> 顯示解答</button>
+            </div>
+        </aside>
+
+        <!-- Center: Game Board Area -->
+        <section class="board-area">
+            <!-- Target Sum Banner -->
+            <div class="target-banner">
+                <span>請使每行、每列及兩條對角線的數字總和皆為：</span>
+                <strong class="target-glow" id="banner-sum">15</strong>
+            </div>
+
+            <!-- Outer container that manages alignments of row, col, and diagonal sums -->
+            <div class="board-outer-wrapper">
+                <!-- Diagonal Sum indicator - Top-Left to Bottom-Right -->
+                <div class="diag-sum tl-br" id="sum-diag-1" title="對角線總和">
+                    <i class="fa-solid fa-arrow-down-right"></i>
+                    <span>0</span>
+                </div>
+                
+                <!-- Diagonal Sum indicator - Top-Right to Bottom-Left -->
+                <div class="diag-sum tr-bl" id="sum-diag-2" title="對角線總和">
+                    <i class="fa-solid fa-arrow-down-left"></i>
+                    <span>0</span>
+                </div>
+
+                <!-- The Actual Grid -->
+                <div id="grid-container" class="grid-3x3">
+                    <!-- Javascript will generate grid cells here -->
+                </div>
+
+                <!-- Row indicators will be appended dynamically via JS -->
+                <!-- Column indicators will be appended dynamically via JS -->
+            </div>
+
+            <!-- Bottom: Number Bank (Only for Fill Mode) -->
+            <div class="bank-container" id="number-bank-wrapper">
+                <h3 class="bank-title">可用數字庫 (Number Bank) <span class="bank-desc">點選數字，再點選格子；或雙擊格子清除數字</span></h3>
+                <div class="number-bank" id="number-bank">
+                    <!-- JS will generate number bank tiles here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal: Tutorial / How to Play -->
+    <div class="modal hidden" id="modal-tutorial">
+        <div class="modal-overlay"></div>
+        <div class="modal-content glass-panel">
+            <button class="modal-close"><i class="fa-solid fa-xmark"></i></button>
+            <h2><i class="fa-solid fa-wand-magic-sparkles"></i> 什麼是魔術方框（魔術方陣）？</h2>
+            <div class="modal-body">
+                <p><strong>魔術方框 (Magic Square)</strong> 是一個古老而迷人的數學謎題。在 $N \times N$ 的方格中，填入從 $1$ 到 $N^2$ 的不重複整數，使得<strong>每一橫行</strong>、<strong>每一直列</strong>以及<strong>兩條對角線</strong>上的數字加總，都等於同一個常數（稱為魔術常數，Magic Constant）。</p>
+                
+                <div class="formula-box">
+                    <span>魔術常數公式：</span>
+                    <code>M = N × (N² + 1) / 2</code>
+                </div>
+
+                <div class="constant-list">
+                    <div class="const-item"><strong>3x3 方陣</strong>：數字 1 ~ 9，目標和為 <strong>15</strong></div>
+                    <div class="const-item"><strong>4x4 方陣</strong>：數字 1 ~ 16，目標和為 <strong>34</strong></div>
+                    <div class="const-item"><strong>5x5 方陣</strong>：數字 1 ~ 25，目標和為 <strong>65</strong></div>
+                </div>
+
+                <h3><i class="fa-solid fa-gamepad"></i> 玩法說明</h3>
+                <ul class="how-to-play-list">
+                    <li>
+                        <strong><i class="fa-solid fa-pen-to-square"></i> 填數模式</strong>：
+                        點擊下方「數字庫」的數字將其選取，接著點擊方格填入。或直接在格子間進行數字拖放。雙擊格子可以清除已填入的數字。
+                    </li>
+                    <li>
+                        <strong><i class="fa-solid fa-arrows-rotate"></i> 置換模式</strong>：
+                        方格會預先填滿所有數字。點擊第一個格子，再點擊第二個格子，即可直接交換兩個數字的位置，逐步調整到符合規則。
+                    </li>
+                    <li>
+                        <strong><i class="fa-solid fa-lightbulb"></i> 提示與解鎖</strong>：
+                        卡關時可以點擊「提示一個字」來獲得目前位置的正確解答數字。若真的解不開，也可以點擊「顯示解答」直接觀摩。
+                    </li>
+                </ul>
+
+                <h3><i class="fa-solid fa-history"></i> 趣味歷史背景</h3>
+                <p>相傳在中國古代，大禹治水時，洛河中浮出一隻神龜，其背甲上有排列成九宮格的圖案（點數為 1 至 9），不論橫、直、斜向相加皆為 15，這就是著名的<strong>「洛書」</strong>，也是世界上最早記載的 3x3 魔術方陣。</p>
+            </div>
+            <div class="modal-footer">
+                <button class="primary-btn" id="btn-close-tutorial">我準備好了，開始遊戲！</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Victory Celebration -->
+    <div class="modal hidden" id="modal-victory">
+        <div class="modal-overlay"></div>
+        <div class="modal-content glass-panel victory-content">
+            <div class="victory-icon-wrapper">
+                <i class="fa-solid fa-trophy trophy-glow animate-bounce"></i>
+            </div>
+            <h2>恭喜通關！成功復原魔陣！</h2>
+            <p class="victory-message">你展現了超凡的邏輯與心算能力！</p>
+            
+            <div class="victory-stats">
+                <div class="v-stat">
+                    <span class="v-label">方陣維度</span>
+                    <span class="v-val" id="victory-size">3x3</span>
+                </div>
+                <div class="v-stat">
+                    <span class="v-label">所用時間</span>
+                    <span class="v-val" id="victory-time">00:45</span>
+                </div>
+                <div class="v-stat">
+                    <span class="v-label">操作步數</span>
+                    <span class="v-val" id="victory-moves">18 步</span>
+                </div>
+                <div class="v-stat">
+                    <span class="v-label">關卡難度</span>
+                    <span class="v-val" id="victory-diff">中級</span>
+                </div>
+            </div>
+
+            <canvas id="confetti-canvas"></canvas>
+
+            <div class="modal-footer">
+                <button class="primary-btn" id="btn-next-level"><i class="fa-solid fa-forward"></i> 下一關 / 新挑戰</button>
+                <button class="secondary-btn" id="btn-share"><i class="fa-solid fa-share-nodes"></i> 分享成就</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification System -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Web Audio API Synth Controller & Audio toggle -->
+    <div class="audio-control">
+        <button id="audio-toggle" class="audio-btn" title="切換音效"><i class="fa-solid fa-volume-high"></i></button>
+    </div>
+
+    <script src="confetti.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
