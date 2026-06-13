@@ -402,7 +402,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         // Set dynamic layout properties
-        boardOuterWrapper.className = `board-outer-wrapper grid-${gridSize}x3`;
+        boardOuterWrapper.className = `board-outer-wrapper grid-${gridSize}x${gridSize}`;
         
         // Render
         renderBoardGrid();

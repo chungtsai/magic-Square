@@ -1048,37 +1048,7 @@ body {
     to { transform: translateX(0); opacity: 1; }
 }
 
-.audio-control {
-    position: fixed;
-    bottom: 2rem;
-    left: 2rem;
-    z-index: 999;
-}
-
-.audio-btn {
-    background: rgba(0, 0, 0, 0.4);
-    border: 1px solid var(--border-panel);
-    color: var(--text-secondary);
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1rem;
-    transition: all 0.2s;
-    backdrop-filter: blur(5px);
-}
-
-.audio-btn:hover {
-    color: #fff;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 10px rgba(157, 78, 221, 0.4);
-    transform: scale(1.08);
-}
-
-/* ==========================================================================
+/* ==========================================================================================================
    Animations & Utilities
    ========================================================================== */
 @keyframes pulse-glow {
@@ -1150,3 +1120,38 @@ body {
         font-size: 0.95rem;
     }
 }
+
+@media (max-width: 380px) {
+    .grid-3x3 { --cell-size: 48px; }
+    .grid-4x4 { --cell-size: 40px; }
+    .grid-5x5 { --cell-size: 34px; }
+    
+    .board-outer-wrapper {
+        padding: 0.35rem;
+        grid-template-columns: 30px repeat(var(--grid-size), var(--cell-size)) 30px;
+        grid-template-rows: 30px repeat(var(--grid-size), var(--cell-size)) 30px;
+        gap: 3px;
+        border-radius: 12px;
+    }
+    
+    .sum-indicator, .diag-sum {
+        width: 24px;
+        height: 24px;
+        font-size: 0.65rem;
+    }
+    
+    .tile-num {
+        font-size: 1.0rem;
+    }
+    
+    .bank-tile {
+        width: 28px;
+        height: 28px;
+        font-size: 0.85rem;
+    }
+    
+    .number-bank {
+        gap: 5px;
+    }
+}
+
